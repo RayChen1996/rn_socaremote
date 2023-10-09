@@ -112,7 +112,6 @@ const Readers = ({navigation}) => {
           navigation.navigate('ReaderFunc');
         }}
         style={{
-          flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
@@ -162,11 +161,21 @@ const Readers = ({navigation}) => {
     <View
       style={{
         flex: 1,
+        flexDirection: 'column',
       }}>
-      <MyHeader isHomePage={true} titleText={'編輯'} />
+      <MyHeader
+        isHomePage={true}
+        isShowBackBtn={false}
+        isShowMoreBtn={true}
+        titleText={'編輯'}
+        onMoreBtnPress={() => {
+          console.log('1');
+        }}
+      />
+
       <View
         style={{
-          flex: 0.8,
+          flex: 0.88,
         }}>
         <FlatList
           data={readers}
@@ -178,6 +187,7 @@ const Readers = ({navigation}) => {
       <View
         style={{
           flex: 0.1,
+
           flexDirection: 'row',
         }}>
         <View
@@ -216,15 +226,6 @@ const Readers = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  emptyBackground: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0', // 背景颜色
-  },
   item: {
     padding: 16,
     borderBottomWidth: 1,

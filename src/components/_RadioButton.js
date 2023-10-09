@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: 'blue',
+    borderColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: 'blue', // 选中状态的圆圈颜色
+    backgroundColor: 'green', // 选中状态的圆圈颜色
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,

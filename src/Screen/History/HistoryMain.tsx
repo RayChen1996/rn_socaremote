@@ -7,12 +7,17 @@ import {
   FlatList,
   Modal,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
-import MyHeader from '../../components/_header';
+
+import Rdo from '../../components/_RadioButton';
 import MyBtn from '../../components/_Button';
+import MyHeader from '../../components/_header';
+
 import {useState} from 'react';
 // create a component
 const HistoryMain = ({navigation}) => {
+  const [number, onChangeNumber] = React.useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
   const data = [
@@ -30,8 +35,6 @@ const HistoryMain = ({navigation}) => {
 
   const handleAction = action => {
     // 执行相应的操作
-
-    console.log('OKOKO   ' + action);
 
     switch (action) {
       case 'adduser':
@@ -53,65 +56,102 @@ const HistoryMain = ({navigation}) => {
   const [SettingData, setSettingData] = useState([
     {
       id: 0,
-      name: 'AAA',
-      val: '0000666666',
-      Type: 0x01,
+
+      Card: '0000666667',
+      Name: 'AAA',
+      StateCode: 0x00,
+      State: '電腦重設時間',
+      Date: '2023-04-18',
+      Time: '09:32:43',
     },
     {
       id: 1,
-      name: 'BBB',
-      val: '0000666667',
-      Type: 0x00,
-    },
-    {
-      id: 2,
-      name: 'CCC',
-      val: '0000666668',
-      Type: 0x01,
+
+      Card: '0000666667',
+      Name: 'BBB',
+      StateCode: 0x00,
+      State: '進入',
+      Date: '2023-04-18',
+      Time: '09:32:43',
     },
   ]);
 
   const renderSetting = ({item}) => {
-    console.log(item.name);
     return (
       <TouchableOpacity
         style={{
           flexDirection: 'row',
           justifyContent: 'space-around',
           alignItems: 'center',
-          padding: 15,
-          margin: 10,
-          borderBottomWidth: 1,
-          borderBottomColor: '#ccc',
+          padding: 8,
+          margin: 5,
+          borderRadius: 5,
+          borderWidth: 1,
         }}>
         <View
           style={{
             flex: 0.5,
             justifyContent: 'flex-start',
           }}>
-          <Text
+          <View
             style={{
-              color: '#000',
-              textAlign: 'left',
-              fontWeight: '900',
-              fontSize: 24,
+              flex: 0.333,
             }}>
-            {item.name}
-          </Text>
+            <Text
+              style={{
+                color: 'black',
+              }}>
+              {item.Card}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 0.333,
+            }}>
+            <Text
+              style={{
+                color: 'black',
+              }}>
+              {item.Date}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 0.333,
+            }}>
+            <Text
+              style={{
+                color: 'black',
+              }}>
+              {item.Time}
+            </Text>
+          </View>
         </View>
         <View
           style={{
             flex: 0.5,
-
             justifyContent: 'flex-end',
             alignItems: 'flex-end',
           }}>
-          <Text
+          <View
             style={{
-              color: 'black',
+              flex: 0.333,
             }}>
-            {item.val}
-          </Text>
+            <Text
+              style={{
+                color: 'black',
+              }}>
+              {item.State}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 0.333,
+            }}></View>
+          <View
+            style={{
+              flex: 0.333,
+            }}></View>
         </View>
       </TouchableOpacity>
     );
@@ -132,6 +172,11 @@ const HistoryMain = ({navigation}) => {
     console.log('接點2輸出');
   };
   const handleClickBtn = () => {
+    navigation.pop();
+  };
+
+  const handleClickMoreBtn = () => {
+    console.log('press more btn ');
     setModalVisible(true);
   };
 
@@ -145,11 +190,17 @@ const HistoryMain = ({navigation}) => {
         flex: 1,
         flexDirection: 'column',
       }}>
-      <MyHeader onPress={handleClickBtn} titleText={'歷史紀錄'} />
+      <MyHeader
+        isShowMoreBtn={true}
+        isShowBackBtn={true}
+        onPress={handleClickBtn}
+        onMoreBtnPress={handleClickMoreBtn}
+        titleText={'歷史紀錄'}
+      />
 
       <View
         style={{
-          flex: 0.8,
+          flex: 0.88,
         }}>
         <FlatList
           data={SettingData}
@@ -183,6 +234,7 @@ const HistoryMain = ({navigation}) => {
             flex: 0.1,
           }}></View>
       </View>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -190,12 +242,162 @@ const HistoryMain = ({navigation}) => {
         onRequestClose={() => setModalVisible(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>請選擇動作</Text>
-            <FlatList
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={item => item.key}
-            />
+            <View
+              style={{
+                flex: 0.1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View style={{flex: 0.05}}></View>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                歷史紀錄查詢
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.05,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}></View>
+            <View
+              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                開始日期
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeNumber}
+                value={number}
+                keyboardType="numeric"
+              />
+            </View>
+            <View
+              style={{
+                flex: 0.05,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}></View>
+            <View
+              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                結束日期
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeNumber}
+                value={number}
+                keyboardType="numeric"
+                placeholder="00:00"
+              />
+            </View>
+            <View
+              style={{
+                flex: 0.05,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}></View>
+            <View
+              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                查詢目標
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeNumber}
+                value={number}
+                keyboardType="numeric"
+                placeholder="00:00"
+              />
+            </View>
+            <View
+              style={{
+                flex: 0.05,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}></View>
+            <View
+              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                排列方式
+              </Text>
+
+              <Rdo label={'遞增'} />
+
+              <Rdo label={'遞增'} />
+            </View>
+            <View
+              style={{
+                flex: 0.34,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}></View>
+
+            <View
+              style={{
+                flex: 0.15,
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  flex: 0.01,
+                }}></View>
+
+              <View
+                style={{
+                  flex: 0.465,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'green',
+                  }}>
+                  <Text
+                    style={{
+                      padding: 15,
+                      textAlign: 'center',
+                      color: '#000',
+                      fontWeight: '900',
+                      fontSize: 20,
+                    }}>
+                    取消
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={{
+                  flex: 0.465,
+                }}>
+                <TouchableOpacity
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'green',
+                  }}>
+                  <Text
+                    style={{
+                      padding: 15,
+                      textAlign: 'center',
+                      color: '#000',
+                      fontWeight: '900',
+                      fontSize: 20,
+                    }}>
+                    查詢
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={{
+                  flex: 0.01,
+                }}></View>
+            </View>
           </View>
         </View>
       </Modal>
@@ -205,6 +407,11 @@ const HistoryMain = ({navigation}) => {
 
 // define your styles
 const styles = StyleSheet.create({
+  item: {
+    fontSize: 16,
+    padding: 8,
+    color: '#000',
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -212,7 +419,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: 200,
+    width: '90%',
+    height: '75%',
     backgroundColor: 'white',
     padding: 16,
     borderRadius: 8,
@@ -227,6 +435,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 8,
     color: '#000',
+  },
+  optionText: {
+    fontWeight: '900',
+    color: '#000',
+    fontSize: 20,
+  },
+  input: {
+    color: '#ccc',
+    height: 40,
+    width: 150,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });
 

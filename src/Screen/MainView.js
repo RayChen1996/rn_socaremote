@@ -19,6 +19,8 @@ import CardHome from '../Screen/Cards/CardHome';
 import AddCard from '../Screen/Cards/AddCardPage';
 import EditCard from '../Screen/Cards/EditCard';
 
+import CardCopy from '../Screen/Cards/ReaderCopy';
+
 import HistoryMain from '../Screen/History/HistoryMain';
 
 const Stack = createStackNavigator();
@@ -77,6 +79,13 @@ const MainView = () => {
           }}
           component={CardHome}
         />
+        <Stack.Screen
+          name="CardCopy"
+          options={{
+            headerShown: false,
+          }}
+          component={CardCopy}
+        />
 
         <Stack.Screen
           name="AddCard"
@@ -85,7 +94,6 @@ const MainView = () => {
           }}
           component={AddCard}
         />
-
         <Stack.Screen
           name="EditCard"
           options={{
@@ -93,7 +101,6 @@ const MainView = () => {
           }}
           component={EditCard}
         />
-
         <Stack.Screen
           name="HistoryMain"
           options={{

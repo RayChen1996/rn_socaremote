@@ -30,15 +30,12 @@ const CardHome = ({navigation}) => {
 
   const handleAction = action => {
     // 执行相应的操作
-
-    console.log('OKOKO   ' + action);
-
     switch (action) {
       case 'adduser':
         navigation.navigate('AddCard');
         break;
       case 'copyreader':
-        navigation.navigate('CardHome');
+        navigation.navigate('CardCopy');
         break;
       case 'deletAll':
         break;
@@ -75,12 +72,15 @@ const CardHome = ({navigation}) => {
     console.log(item.name);
     return (
       <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('EditCard');
+        }}
         style={{
           flexDirection: 'row',
           justifyContent: 'space-around',
           alignItems: 'center',
-          padding: 15,
-          margin: 10,
+          padding: 5,
+          margin: 5,
           borderBottomWidth: 1,
           borderBottomColor: '#ccc',
         }}>
@@ -89,15 +89,28 @@ const CardHome = ({navigation}) => {
             flex: 0.5,
             justifyContent: 'flex-start',
           }}>
-          <Text
-            style={{
-              color: '#000',
-              textAlign: 'left',
-              fontWeight: '900',
-              fontSize: 24,
-            }}>
-            {item.name}
-          </Text>
+          <View>
+            <Text
+              style={{
+                color: '#000',
+                textAlign: 'left',
+                fontWeight: '900',
+                fontSize: 24,
+              }}>
+              {item.val}
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                color: '#000',
+                textAlign: 'left',
+                fontWeight: '900',
+                fontSize: 24,
+              }}>
+              {item.name}
+            </Text>
+          </View>
         </View>
         <View
           style={{
@@ -106,12 +119,36 @@ const CardHome = ({navigation}) => {
             justifyContent: 'flex-end',
             alignItems: 'flex-end',
           }}>
-          <Text
+          <View
             style={{
-              color: 'black',
+              flex: 0.5,
             }}>
-            {item.val}
-          </Text>
+            {item.Type == 0x01 ? (
+              <Text
+                style={{
+                  color: '#000',
+                  textAlign: 'left',
+                  fontWeight: '900',
+                  fontSize: 24,
+                }}>
+                卡片
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  color: '#000',
+                  textAlign: 'left',
+                  fontWeight: '900',
+                  fontSize: 24,
+                }}>
+                密碼
+              </Text>
+            )}
+          </View>
+          <View
+            style={{
+              flex: 0.5,
+            }}></View>
         </View>
       </TouchableOpacity>
     );
@@ -132,7 +169,7 @@ const CardHome = ({navigation}) => {
     console.log('接點2輸出');
   };
   const handleClickBtn = () => {
-    setModalVisible(true);
+    navigation.pop();
   };
 
   const closeDoor = () => {
@@ -145,7 +182,16 @@ const CardHome = ({navigation}) => {
         flex: 1,
         flexDirection: 'column',
       }}>
-      <MyHeader onPress={handleClickBtn} titleText={'使用者清單'} />
+      <MyHeader
+        isShowMoreBtn={true}
+        isShowBackBtn={true}
+        onMoreBtnPress={() => {
+          console.log('click menu');
+          setModalVisible(true);
+        }}
+        onPress={handleClickBtn}
+        titleText={'使用者清單'}
+      />
 
       <View
         style={{
@@ -165,7 +211,7 @@ const CardHome = ({navigation}) => {
       </View>
       <View
         style={{
-          flex: 0.75,
+          flex: 0.85,
         }}>
         <FlatList
           data={SettingData}

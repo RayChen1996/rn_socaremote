@@ -17,15 +17,22 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {Button} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons'; // 使用适当的图标库和图标名称
 const _header = props => {
-  const {onPress, titleText, isHomePage, isShowMoreBtn, isShowBackBtn} = props;
+  const {
+    onPress,
+    onMoreBtnPress,
+    titleText,
+    isHomePage,
+    isShowMoreBtn,
+    isShowBackBtn,
+  } = props;
   return (
     <View
       style={{
-        flex: 0.1,
         backgroundColor: '#fff',
         borderBottomWidth: 1,
         borderBottomColor: '#000',
         flexDirection: 'row',
+        padding: 10,
       }}>
       <View
         style={{
@@ -36,7 +43,7 @@ const _header = props => {
         {isShowBackBtn ? (
           <TouchableOpacity
             onPress={() => {
-              console.log('back press');
+              onPress();
             }}
             style={{}}>
             {/**   
@@ -64,7 +71,7 @@ const _header = props => {
         {isHomePage ? (
           <Image
             style={{
-              width: 250,
+              width: 180,
               height: 90,
               resizeMode: 'contain',
             }}
@@ -84,7 +91,7 @@ const _header = props => {
       <View
         style={{flex: 0.222, justifyContent: 'center', alignItems: 'center'}}>
         {isShowMoreBtn ? (
-          <TouchableOpacity onPress={onPress} style={{}}>
+          <TouchableOpacity onPress={onMoreBtnPress} style={{}}>
             {/**   
          <FontAwesomeIcon icon={faArrowCircleLeft} size={32} color="green" />
           */}

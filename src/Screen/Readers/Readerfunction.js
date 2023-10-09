@@ -5,13 +5,20 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  TextInput,
   Image,
+  Modal,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import MyHeader from '../../components/_header';
+import Rdo from '../../components/_RadioButton';
+import MyBtn from '../../components/_Button';
 import {useState} from 'react';
 // create a component
 const ReaderFunc = ({navigation}) => {
+  const [number, onChangeNumber] = React.useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const [SettingData, setSettingData] = useState([
     {
       id: 0,
@@ -56,6 +63,28 @@ const ReaderFunc = ({navigation}) => {
       src: require('../../assets/deletereader.png'),
     },
   ]);
+
+  const handleDelete = () => {
+    Alert.alert(
+      '確定刪除',
+      '您確定要刪除嗎？',
+      [
+        {
+          text: '取消',
+          onPress: () => console.log('取消删除'),
+          style: 'cancel',
+        },
+        {
+          text: '删除',
+          onPress: () => {
+            // 在这里执行删除操作
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   const clickFunc = evtName => {
     switch (evtName) {
       case '機器資訊':
@@ -66,6 +95,7 @@ const ReaderFunc = ({navigation}) => {
       case '機器資訊':
         break;
       case '不上鎖時段':
+        setModalVisible(true);
         break;
       case '歷史紀錄':
         navigation.navigate('HistoryMain');
@@ -75,9 +105,10 @@ const ReaderFunc = ({navigation}) => {
         break;
 
       case '編輯':
-        navigation.navigate('CardHome');
+        navigation.navigate('EditReader');
         break;
       case '刪除':
+        handleDelete();
         break;
 
       default:
@@ -143,7 +174,13 @@ const ReaderFunc = ({navigation}) => {
         flex: 1,
         flexDirection: 'column',
       }}>
-      <MyHeader titleText={'讀卡機'} />
+      <MyHeader
+        onPress={() => {
+          navigation.pop();
+        }}
+        isShowBackBtn={true}
+        titleText={'讀卡機'}
+      />
 
       <View
         style={{
@@ -155,12 +192,291 @@ const ReaderFunc = ({navigation}) => {
           keyExtractor={item => item.id.toString()}
         />
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <View
+              style={{
+                flex: 0.1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+              }}>
+              <Text
+                style={{
+                  color: '#000',
+                  fontSize: 18,
+                  fontWeight: '900',
+                }}>
+                啟用狀態
+              </Text>
+              <View style={{flex: 0.25}}>
+                <Rdo label={'卡片'} />
+              </View>
+              <View style={{flex: 0.25}}>
+                <Rdo label={'密碼'} />
+              </View>
+            </View>
+            <View
+              style={{flex: 0.1, flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{flex: 0.05}}></View>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                星期
+              </Text>
+              <View style={{flex: 0.1}}></View>
+            </View>
+
+            <View
+              style={{
+                flex: 0.1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+              }}>
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  日
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  一
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  二
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  三
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  四
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  五
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: '#000',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                  }}>
+                  六
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={{flex: 0.1, flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{flex: 0.05}}></View>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                開始日期
+              </Text>
+              <View style={{flex: 0.1}}></View>
+            </View>
+
+            <View
+              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeNumber}
+                value={number}
+                keyboardType="numeric"
+              />
+            </View>
+
+            <View
+              style={{flex: 0.1, flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{flex: 0.05}}></View>
+              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+                結束日期
+              </Text>
+              <View style={{flex: 0.1}}></View>
+            </View>
+
+            <View
+              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeNumber}
+                value={number}
+                keyboardType="numeric"
+                placeholder="00:00"
+              />
+            </View>
+
+            <View
+              style={{
+                flex: 0.3,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}></View>
+
+            <View
+              style={{
+                flex: 0.15,
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  flex: 0.01,
+                }}></View>
+
+              <View
+                style={{
+                  flex: 0.465,
+                }}>
+                <MyBtn
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                  buttonText={'取消'}
+                />
+              </View>
+              <View
+                style={{
+                  flex: 0.05,
+                }}></View>
+              <View
+                style={{
+                  flex: 0.465,
+                }}>
+                <MyBtn buttonText={'確定傳送'} />
+              </View>
+
+              <View
+                style={{
+                  flex: 0.01,
+                }}></View>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 // define your styles
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '85%',
+    height: '75%',
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 8,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '900',
+    marginBottom: 16,
+    color: '#000',
+  },
+  item: {
+    fontSize: 16,
+    padding: 8,
+    color: '#000',
+  },
+  optionText: {
+    fontWeight: '900',
+    color: '#000',
+    fontSize: 20,
+  },
+  input: {
+    color: '#ccc',
+    height: 40,
+    width: 150,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
 
 //make this component available to the app
 export default ReaderFunc;

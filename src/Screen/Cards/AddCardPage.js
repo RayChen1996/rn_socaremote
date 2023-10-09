@@ -1,9 +1,16 @@
 //import liraries
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import MyHeader from '../../components/_header';
 import MyBtn from '../../components/_Button';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import dayjs from 'dayjs';
 import Rdo from '../../components/_RadioButton';
 // create a component
@@ -28,10 +35,23 @@ const AddCard = ({navigation}) => {
         flex: 1,
         flexDirection: 'column',
       }}>
-      <MyHeader titleText={'新增使用者'} />
       <View
         style={{
-          flex: 0.12,
+          flex: 0.1,
+        }}>
+        <MyHeader
+          onPress={() => {
+            navigation.pop();
+          }}
+          isShowBackBtn={true}
+          titleText={'新增使用者'}
+        />
+      </View>
+
+      {/**
+      <View
+        style={{
+          flex: 0.05,
           backgroundColor: '#ccc',
           flexDirection: 'row',
           justifyContent: 'space-around',
@@ -71,10 +91,11 @@ const AddCard = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      */}
 
       <View
         style={{
-          flex: 0.7,
+          flex: 0.8,
         }}>
         <ScrollView style={{flex: 0.4}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
