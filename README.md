@@ -1,0 +1,2 @@
+# socaremote
+ using React Native 
