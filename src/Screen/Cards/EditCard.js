@@ -39,8 +39,8 @@ const CardEdit = ({navigation}) => {
           flex: 0.89,
         }}>
         <ScrollView style={{flex: 0.4}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 0.1}}></View>
+          <View style={{flexDirection: 'row', gap: 25, alignItems: 'center'}}>
+            <View style={{flex: 0.01}}></View>
             <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
               名稱
             </Text>
@@ -53,8 +53,8 @@ const CardEdit = ({navigation}) => {
             />
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 0.1}}></View>
+          <View style={{flexDirection: 'row', gap: 25, alignItems: 'center'}}>
+            <View style={{flex: 0.01}}></View>
             <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
               卡片
             </Text>
@@ -67,8 +67,8 @@ const CardEdit = ({navigation}) => {
             />
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 0.1}}></View>
+          <View style={{flexDirection: 'row', gap: 25, alignItems: 'center'}}>
+            <View style={{flex: 0.01}}></View>
             <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
               卡片密碼
             </Text>
@@ -82,8 +82,13 @@ const CardEdit = ({navigation}) => {
             <View style={{flex: 0.1}}></View>
           </View>
 
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 0.18}}></View>
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 25,
+              alignItems: 'center',
+            }}>
+            <View style={{flex: 0.01}}></View>
             <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
               使用期限
             </Text>
@@ -184,12 +189,55 @@ const CardEdit = ({navigation}) => {
             <View style={{flex: 0.1}}></View>
             <View style={{flex: 0.8}}>
               <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('EditReaderFloor');
+                }}
                 style={{
                   borderWidth: 1,
                   padding: 10,
                   margin: 10,
                 }}>
-                <Text style={{textAlign: 'center'}}>選擇樓層</Text>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                    textAlign: 'center',
+                  }}>
+                  選擇樓層
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{flex: 0.1}}></View>
+          </View>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flex: 0.1}}></View>
+            <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+              授權發卡
+            </Text>
+            <View style={{flex: 0.1}}></View>
+          </View>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flex: 0.1}}></View>
+            <View style={{flex: 0.8}}>
+              <TouchableOpacity
+                onPress={() => {
+                  //彈出QRCODE窗
+                }}
+                style={{
+                  borderWidth: 1,
+                  padding: 10,
+                  margin: 10,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '900',
+                    textAlign: 'center',
+                  }}>
+                  發送行動條碼
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={{flex: 0.1}}></View>

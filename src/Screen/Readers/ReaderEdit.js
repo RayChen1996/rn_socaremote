@@ -9,13 +9,31 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Image,
 } from 'react-native';
+
+import {
+  faCalendar,
+  faBullhorn,
+  faEnvelope,
+  faComment,
+  faBookmark,
+  faUser,
+  faArrowCircleLeft,
+  faLock,
+  faArrowRight,
+  faArrowTurnRight,
+  faBackward,
+} from '@fortawesome/free-solid-svg-icons';
+
+import imgArrow from '../../assets/back.png';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import MyHeader from '../../components/_header';
 import {useState} from 'react';
 import MyBtn from '../../components/_Button';
 import MyTextInput from '../../components/_TextInput';
 // create a component
-const ReaderEdit = ({navigation}) => {
+const ReaderEdit = ({navigation, route}) => {
   const [isModalVisible, setIsModalVisible] = useState(false); // 控制模态框的显示和隐藏
   const [inputValue, setInputValue] = useState(''); // 存储用户输入的值
 
@@ -96,7 +114,6 @@ const ReaderEdit = ({navigation}) => {
   };
 
   const renderSetting = ({item}) => {
-    console.log(item.name);
     return (
       <TouchableOpacity
         onPress={() => {
@@ -106,14 +123,14 @@ const ReaderEdit = ({navigation}) => {
           flexDirection: 'row',
           justifyContent: 'space-around',
           alignItems: 'center',
-          padding: 15,
+          padding: 10,
           margin: 10,
           borderBottomWidth: 1,
           borderBottomColor: '#ccc',
         }}>
         <View
           style={{
-            flex: 0.5,
+            flex: 0.6,
             justifyContent: 'flex-start',
           }}>
           <Text
@@ -128,17 +145,53 @@ const ReaderEdit = ({navigation}) => {
         </View>
         <View
           style={{
-            flex: 0.5,
+            flex: 0.4,
 
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          <Text
+          <View
             style={{
-              color: 'black',
+              flex: 0.8,
+              justifyContent: 'flex-end',
             }}>
-            {item.val}
-          </Text>
+            <Text
+              style={{
+                flex: 0.5,
+                textAlign: 'right',
+                verticalAlign: 'middle',
+                color: 'black',
+                fontWeight: '900',
+                color: '#ccc',
+              }}>
+              {item.val}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 0.2,
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => setModalVisible(true)}>
+              <Image
+                style={{
+                  width: 10,
+                  height: 10,
+                  resizeMode: 'contain',
+                  transform: [{rotate: '180deg'}],
+
+                  color: '#ccc',
+                }}
+                source={imgArrow}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
     );

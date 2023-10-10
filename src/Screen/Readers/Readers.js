@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import * as StorageHelper from '../../helps/Store';
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -9,36 +10,38 @@ import {
   Image,
   Alert,
   Modal,
+  Share,
 } from 'react-native';
 import 'react-native-gesture-handler';
 import MyHeader from '../../components/_header';
 import MyBtn from '../../components/_Button';
-import {NavigationContainer} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import img580 from '../../assets/st580.png';
 import unlocak from '../../assets/unlock.png';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  faCalendar,
-  faBullhorn,
-  faEnvelope,
-  faComment,
-  faBookmark,
-  faUser,
-  faArrowCircleLeft,
-  faLock,
-} from '@fortawesome/free-solid-svg-icons';
+import {faLock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 const Stack = createStackNavigator();
 
 const Readers = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
-
+  const contentToShare = '这是要分享的内容。';
   const data = [
     {key: 'openDoor', label: '開門'},
     {key: 'emergencyOpenDoor', label: '緊急開門'},
     {key: 'output2', label: '接點2輸出'},
     {key: 'closeDoor', label: '關門'},
   ];
+
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        message: contentToShare, // 要分享的内容
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   const renderItem = ({item}) => (
     <TouchableOpacity onPress={() => handleAction(item.key)}>
@@ -52,20 +55,7 @@ const Readers = ({navigation}) => {
     setModalVisible(false); // 关闭对话框
   };
 
-  const [readers, setReaders] = useState([
-    {
-      id: 1,
-      name: 'ST-580U',
-    },
-    {
-      id: 2,
-      name: 'ST-580U',
-    },
-    {
-      id: 3,
-      name: 'ST-580U',
-    },
-  ]);
+  const [readers, setReaders] = useState([]);
   const showOptions = () => {
     Alert.alert(
       '选择一个操作',
@@ -109,7 +99,8 @@ const Readers = ({navigation}) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ReaderFunc');
+          const itemId = item.id;
+          navigation.navigate('ReaderFunc', {itemId});
         }}
         style={{
           justifyContent: 'center',
@@ -157,6 +148,56 @@ const Readers = ({navigation}) => {
       </TouchableOpacity>
     );
   };
+
+  useEffect(() => {
+    // StorageHelper.removeData('Readers');
+    const unsubscribe = navigation.addListener('focus', () => {
+      // 在返回到组件时执行的操作
+      StorageHelper.getData('Readers')
+        .then(a => {
+          if (a != undefined) {
+            try {
+              let PaeseA = JSON.parse(a);
+              setReaders(PaeseA);
+            } catch (e) {
+              console.log(' parse Err');
+            }
+          } else {
+            let arr = [];
+            let Reader = {
+              No: 1,
+              Name: 'ST-580U',
+              IP: '192.168.10.83',
+              Port: 4447,
+              TimeOut: 3,
+            };
+          }
+        })
+        .catch(error => {});
+    });
+    StorageHelper.getData('Readers')
+      .then(a => {
+        if (a != undefined) {
+          try {
+            let PaeseA = JSON.parse(a);
+            setReaders(PaeseA);
+          } catch (e) {
+            console.log(' parse Err');
+          }
+        } else {
+          let arr = [];
+          let Reader = {
+            No: 1,
+            Name: 'ST-580U',
+            IP: '192.168.10.83',
+            Port: 4447,
+            TimeOut: 3,
+          };
+        }
+      })
+      .catch(error => {});
+  }, [navigation]);
+
   return (
     <View
       style={{
@@ -170,6 +211,7 @@ const Readers = ({navigation}) => {
         titleText={'編輯'}
         onMoreBtnPress={() => {
           console.log('1');
+          handleShare();
         }}
       />
 

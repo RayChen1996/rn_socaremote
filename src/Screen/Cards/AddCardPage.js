@@ -99,7 +99,7 @@ const AddCard = ({navigation}) => {
         }}>
         <ScrollView style={{flex: 0.4}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 0.1}}></View>
+            <View style={{flex: 0.06}}></View>
             <Text
               style={{
                 color: '#000',
@@ -162,12 +162,13 @@ const AddCard = ({navigation}) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={{flex: 0.1}}></View>
+            <View style={{flex: 0.19}}></View>
             <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
               使用期限
             </Text>
+            <View style={{flex: 0.1}}></View>
             <View>
-              <Rdo label={'無限期'} />
+              <Rdo label={'無限期  '} />
             </View>
             <View>
               <Rdo label={'單次'} />
@@ -184,6 +185,7 @@ const AddCard = ({navigation}) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flex: 0.1}}></View>
             <TextInput
               style={styles.input}
               onChangeText={onChangeNumber}
@@ -209,6 +211,7 @@ const AddCard = ({navigation}) => {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flex: 0.1}}></View>
             <TextInput
               style={styles.input}
               onChangeText={onChangeNumber}
@@ -259,6 +262,9 @@ const AddCard = ({navigation}) => {
             <View style={{flex: 0.1}}></View>
             <View style={{flex: 0.8}}>
               <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('EditReaderFloor');
+                }}
                 style={{
                   borderWidth: 1,
                   padding: 10,

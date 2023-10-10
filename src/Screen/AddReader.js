@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -7,9 +7,17 @@ import {
   FlatList,
 } from 'react-native';
 import MyBtn from '../components/_Button';
-import {useState} from 'react';
 
+import * as StorageHelper from '../helps/Store';
 const AddReader = ({navigation}) => {
+  const [rNo, setRNo] = useState(1);
+  const [rName, setRName] = useState('預設卡機');
+  const [rIP, setIP] = useState('192.168.10.89');
+  const [rPort, setPort] = useState(4444);
+  const [rSysPwd, setSysPwd] = useState(567890);
+  const [rOpenTime, setROpenTime] = useState(0x01);
+  const [rBeep, setRBeep] = useState(0x01);
+  const [readers, setReaders] = useState([]);
   const [SettingData, setSettingData] = useState([
     {
       id: 0,
@@ -47,6 +55,17 @@ const AddReader = ({navigation}) => {
       val: '大',
     },
   ]);
+
+  function generateRandomHex() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      },
+    );
+  }
 
   const renderSetting = ({item}) => {
     console.log(item.name);
@@ -94,6 +113,33 @@ const AddReader = ({navigation}) => {
       </TouchableOpacity>
     );
   };
+
+  useEffect(() => {
+    // StorageHelper.removeData('Readers');
+
+    StorageHelper.getData('Readers')
+      .then(a => {
+        if (a != undefined) {
+          try {
+            let PaeseA = JSON.parse(a);
+            setReaders(PaeseA);
+          } catch (e) {
+            console.log(' parse Err');
+          }
+        } else {
+          let arr = [];
+          let Reader = {
+            No: 1,
+            Name: 'ST-580U',
+            IP: '192.168.10.83',
+            Port: 4447,
+            TimeOut: 3,
+          };
+        }
+      })
+      .catch(error => {});
+  }, []);
+
   return (
     <View style={{flex: 1, flexDirection: 'column'}}>
       <View
@@ -123,7 +169,29 @@ const AddReader = ({navigation}) => {
           style={{
             flex: 0.77,
           }}>
-          <MyBtn style={{flex: 0.1}} buttonText={'確認'} />
+          <MyBtn
+            onPress={() => {
+              console.log('add reader ');
+              const randomHex = generateRandomHex();
+              console.log(randomHex);
+
+              console.log(readers);
+              let Reader = {
+                id: randomHex,
+                no: rNo,
+                name: rName,
+                ip: rIP,
+                port: rPort,
+                sysPwd: rSysPwd,
+                openDoorTime: rOpenTime,
+                Beep: rBeep,
+              };
+              readers.push(Reader);
+              StorageHelper.storeData('Readers', JSON.stringify(readers));
+            }}
+            style={{flex: 0.1}}
+            buttonText={'確認'}
+          />
         </View>
         <View
           style={{

@@ -17,13 +17,14 @@ import {
   faBacon,
   faArrowCircleLeft,
   faLock,
+  faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 library.add(
   faCalendar,
   faBullhorn,
-
+  faArrowRight,
   faEnvelope,
   faComment,
   faBookmark,

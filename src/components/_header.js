@@ -24,6 +24,7 @@ const _header = props => {
     isHomePage,
     isShowMoreBtn,
     isShowBackBtn,
+    isNotShowMoreIcon,
   } = props;
   return (
     <View
@@ -71,7 +72,7 @@ const _header = props => {
         {isHomePage ? (
           <Image
             style={{
-              width: 180,
+              width: 150,
               height: 90,
               resizeMode: 'contain',
             }}
@@ -95,14 +96,32 @@ const _header = props => {
             {/**   
          <FontAwesomeIcon icon={faArrowCircleLeft} size={32} color="green" />
           */}
-            <Image
-              style={{
-                width: 35,
-                height: 35,
-                resizeMode: 'contain',
-              }}
-              source={require('../assets/more.png')}
-            />
+            {isNotShowMoreIcon ? (
+              <TouchableOpacity
+                onPress={onMoreBtnPress}
+                style={{
+                  backgroundColor: 'green',
+                  borderRadius: 5,
+                  padding: 10,
+                }}>
+                <Text
+                  style={{
+                    fontWeight: '900',
+                    color: '#fff',
+                  }}>
+                  編輯
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <Image
+                style={{
+                  width: 35,
+                  height: 35,
+                  resizeMode: 'contain',
+                }}
+                source={require('../assets/more.png')}
+              />
+            )}
           </TouchableOpacity>
         ) : (
           ''

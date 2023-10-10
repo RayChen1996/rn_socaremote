@@ -78,8 +78,13 @@ const FloorSet = ({navigation}) => {
 
     // 计算当前分页按钮的数据
     const startIndex = (page - 1) * 18; // 每页显示18个按钮
-    const endIndex = startIndex + 18;
+    let endIndex = startIndex + 18;
 
+    console.log(startIndex);
+    if (endIndex > 128) {
+      endIndex = 128;
+    }
+    console.log(endIndex);
     const buttonsData = allButtons.slice(startIndex, endIndex);
 
     setCurrentPageButtons(buttonsData);

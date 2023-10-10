@@ -11,12 +11,15 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import * as StorageHelper from '../../helps/Store';
 import MyHeader from '../../components/_header';
 import Rdo from '../../components/_RadioButton';
 import MyBtn from '../../components/_Button';
 import {useState} from 'react';
 // create a component
-const ReaderFunc = ({navigation}) => {
+const ReaderFunc = ({navigation, route}) => {
+  const {itemId} = route.params;
+
   const [number, onChangeNumber] = React.useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [SettingData, setSettingData] = useState([
@@ -78,6 +81,26 @@ const ReaderFunc = ({navigation}) => {
           text: '删除',
           onPress: () => {
             // 在这里执行删除操作
+            //itemId
+            const idToDelete = itemId;
+            StorageHelper.getData('Readers')
+              .then(res => {
+                console.log('res', res);
+                let jsonArray = JSON.parse(res);
+
+                const filteredArray = jsonArray.filter(
+                  item => item.id !== idToDelete,
+                );
+
+                console.log(filteredArray);
+                StorageHelper.storeData(
+                  'Readers',
+                  JSON.stringify(filteredArray),
+                );
+
+                navigation.pop();
+              })
+              .catch(() => {});
           },
         },
       ],
@@ -174,6 +197,10 @@ const ReaderFunc = ({navigation}) => {
         flex: 1,
         flexDirection: 'column',
       }}>
+      {/**    
+    <Text>接收到的ID：{itemId}</Text>
+     */}
+
       <MyHeader
         onPress={() => {
           navigation.pop();
@@ -216,10 +243,10 @@ const ReaderFunc = ({navigation}) => {
                 啟用狀態
               </Text>
               <View style={{flex: 0.25}}>
-                <Rdo label={'卡片'} />
+                <Rdo label={'開啟'} />
               </View>
               <View style={{flex: 0.25}}>
-                <Rdo label={'密碼'} />
+                <Rdo label={'關閉'} />
               </View>
             </View>
             <View

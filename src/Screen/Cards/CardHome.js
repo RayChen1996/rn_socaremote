@@ -185,6 +185,7 @@ const CardHome = ({navigation}) => {
       <MyHeader
         isShowMoreBtn={true}
         isShowBackBtn={true}
+        isNotShowMoreIcon={true}
         onMoreBtnPress={() => {
           console.log('click menu');
           setModalVisible(true);
