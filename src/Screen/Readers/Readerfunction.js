@@ -1,5 +1,6 @@
 //import liraries
 import React, {Component} from 'react';
+import * as Comm from '../../socket/comm';
 import {
   View,
   Text,
@@ -111,6 +112,20 @@ const ReaderFunc = ({navigation, route}) => {
   const clickFunc = evtName => {
     switch (evtName) {
       case '機器資訊':
+        Comm.ReadMachineInfo()
+          .then(result => {
+            // 在这里可以访问 result，它包含了从服务器接收的数据
+            console.log('Received data 233:', result);
+            console.log(result.length - 10);
+            if (result.length - 10 >= 48) {
+              console.log('接收到');
+            }
+          })
+          .catch(error => {
+            // 处理错误
+            console.error('Error:', error);
+          });
+
         break;
       case '使用者清單':
         navigation.navigate('CardHome');

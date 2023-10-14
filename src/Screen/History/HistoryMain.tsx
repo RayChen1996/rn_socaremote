@@ -262,7 +262,7 @@ const HistoryMain = ({navigation}) => {
               }}></View>
             <View
               style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+              <Text style={{color: '#000', fontSize: 20, fontWeight: '900'}}>
                 開始日期
               </Text>
               <TextInput
@@ -280,7 +280,7 @@ const HistoryMain = ({navigation}) => {
               }}></View>
             <View
               style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+              <Text style={{color: '#000', fontSize: 20, fontWeight: '900'}}>
                 結束日期
               </Text>
               <TextInput
@@ -299,7 +299,7 @@ const HistoryMain = ({navigation}) => {
               }}></View>
             <View
               style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
+              <Text style={{color: '#000', fontSize: 20, fontWeight: '900'}}>
                 查詢目標
               </Text>
               <TextInput
@@ -312,19 +312,32 @@ const HistoryMain = ({navigation}) => {
             </View>
             <View
               style={{
-                flex: 0.05,
+                flex: 0.06,
                 flexDirection: 'row',
                 alignItems: 'center',
               }}></View>
             <View
-              style={{flex: 0.05, flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: '#000', fontSize: 24, fontWeight: '900'}}>
-                排列方式
-              </Text>
-
-              <Rdo label={'遞增'} />
-
-              <Rdo label={'遞增'} />
+              style={{flex: 0.08, flexDirection: 'row', alignItems: 'center'}}>
+              <View
+                style={{
+                  flex: 0.35,
+                }}>
+                <Text style={{color: '#000', fontSize: 20, fontWeight: '900'}}>
+                  排列方式
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 0.25,
+                }}>
+                <Rdo label={'遞增'} />
+              </View>
+              <View
+                style={{
+                  flex: 0.2,
+                }}>
+                <Rdo label={'遞增'} />
+              </View>
             </View>
             <View
               style={{

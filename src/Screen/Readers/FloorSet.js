@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import MyHeader from '../../components/_header';
 import MyBtn from '../../components/_Button';
+
+import * as Comm from '../../socket/comm';
 // 创建组件
 const FloorSet = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,6 +38,7 @@ const FloorSet = ({navigation}) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [allButtons, setAllButtons] = useState([]);
+  const [selectAllFloor, setSetAllFloor] = useState(false);
   // 每页显示的楼层数量
   const itemsPerPage = 18;
 
@@ -68,6 +71,7 @@ const FloorSet = ({navigation}) => {
 
     setAllButtons(updatedButtons);
   };
+
   const renderItem = ({item}) => (
     <TouchableOpacity onPress={() => handleAction(item.key)}>
       <Text style={styles.item}>{item.label}</Text>
@@ -89,15 +93,31 @@ const FloorSet = ({navigation}) => {
 
     setCurrentPageButtons(buttonsData);
   };
+
+  const handleSelectAllFloor = isActive => {
+    setSetAllFloor(!selectAllFloor);
+    console.log(selectAllFloor);
+    const updatedButtons = allButtons.map(button => {
+      return {...button, active: isActive};
+    });
+
+    setAllButtons(updatedButtons);
+    // console.log(updatedButtons);
+  };
+
   const handleButtonPress = button => {
-    console.log(`id = ${button.id}`);
+    // const newActiveState = !button.active;
+    // updateButtonActive(button.id, button.active);
 
-    const newActiveState = !button.active;
-
-    setTimeout(() => {
-      updateButtonActive(button.id, newActiveState);
-      handlePageChange(selectedPage);
-    }, 1000);
+    if (button.active) {
+      button.active = false;
+    } else {
+      button.active = true;
+    }
+    console.log(`id = ${button.id}  newActiveState =   ${button.active}`);
+    updateButtonActive(button.id, button.active);
+    // updateButtonActive(button.id, button.active);
+    // handlePageChange(selectedPage);
 
     // 根据按钮的操作执行相应的操作
   };
@@ -129,8 +149,8 @@ const FloorSet = ({navigation}) => {
   };
 
   useEffect(() => {
-    handlePageChange(1);
-  }, []);
+    handlePageChange(selectedPage);
+  }, [selectedPage]);
 
   return (
     <View style={{flex: 1, flexDirection: 'column'}}>
@@ -230,11 +250,34 @@ const FloorSet = ({navigation}) => {
         }}>
         <View style={{flex: 0.01}}></View>
         <View style={{flex: 0.465}}>
-          <MyBtn buttonText={'樓層全選'} />
+          <MyBtn
+            onPress={() => {
+              console.log('案全選');
+              handleSelectAllFloor(true);
+            }}
+            buttonText={'樓層全選'}
+          />
         </View>
         <View style={{flex: 0.05}}></View>
         <View style={{flex: 0.465}}>
-          <MyBtn buttonText={'確定傳送'} />
+          <MyBtn
+            onPress={() => {
+              Comm.ReadMachineInfo()
+                .then(result => {
+                  // 在这里可以访问 result，它包含了从服务器接收的数据
+                  console.log('Received data 233:', result);
+                  console.log(result.length - 10);
+                  if (result.length - 10 >= 48) {
+                    console.log('接收到');
+                  }
+                })
+                .catch(error => {
+                  // 处理错误
+                  console.error('Error:', error);
+                });
+            }}
+            buttonText={'確定傳送'}
+          />
         </View>
         <View style={{flex: 0.01}}></View>
       </View>
