@@ -23,7 +23,6 @@ const FloorSet = ({navigation}) => {
     {key: 'cancel', label: '取消'},
   ];
 
-  // 楼层数据
   const floorData = [
     {id: 1, text: '1-18'},
     {id: 2, text: '19-36'},
@@ -39,6 +38,7 @@ const FloorSet = ({navigation}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [allButtons, setAllButtons] = useState([]);
   const [selectAllFloor, setSetAllFloor] = useState(false);
+
   // 每页显示的楼层数量
   const itemsPerPage = 18;
 
@@ -95,14 +95,29 @@ const FloorSet = ({navigation}) => {
   };
 
   const handleSelectAllFloor = isActive => {
+    const startIndex = (selectedPage - 1) * 18; // 每页显示18个按钮
+    let endIndex = startIndex + 18;
+
+    if (endIndex > 128) {
+      endIndex = 128;
+    }
+    const buttonsData = allButtons.slice(startIndex, endIndex);
+
+    setCurrentPageButtons(buttonsData);
+
     setSetAllFloor(!selectAllFloor);
     console.log(selectAllFloor);
     const updatedButtons = allButtons.map(button => {
       return {...button, active: isActive};
     });
 
-    setAllButtons(updatedButtons);
-    // console.log(updatedButtons);
+    setTimeout(() => {
+      console.log('reload page ', 2);
+      setCurrentPage(selectedPage);
+
+      handlePageChange(selectedPage);
+      setAllButtons(updatedButtons);
+    }, 1000);
   };
 
   const handleButtonPress = button => {
@@ -150,7 +165,7 @@ const FloorSet = ({navigation}) => {
 
   useEffect(() => {
     handlePageChange(selectedPage);
-  }, [selectedPage]);
+  }, []);
 
   return (
     <View style={{flex: 1, flexDirection: 'column'}}>
@@ -172,6 +187,7 @@ const FloorSet = ({navigation}) => {
             renderItem={({item}) => (
               <TouchableOpacity
                 onPress={() => {
+                  console.log(`  item.id  ${item.id}`);
                   setSelectedPage(item.id);
                   handlePageChange(item.id);
                 }}

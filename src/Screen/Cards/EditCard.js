@@ -6,12 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Share,
   ScrollView,
 } from 'react-native';
 import dayjs from 'dayjs';
 import MyBtn from '../../components/_Button';
 import DeleteBtn from '../../components/_deleteBtn';
-import Rdo from '../../components/_RadioButton';
+import Rdo from '../../components/_RadioButton'; // 导入QRCodeModal
+import QRCodeModal from '../../components/Modal/QRCodeModal';
+
 // create a component
 const CardEdit = ({navigation}) => {
   const formattedDate = dayjs().format('YYYY/MM/DD');
@@ -19,15 +22,35 @@ const CardEdit = ({navigation}) => {
   const [isMultipleAddSelected, setIsMultipleAddSelected] = useState(false);
   const [text, onChangeText] = React.useState('Useless Text');
   const [number, onChangeNumber] = React.useState('');
+  const [isQRCodeModalVisible, setQRCodeModalVisible] = useState(false);
   const handleSingleAddPress = () => {
     setIsSingleAddSelected(true);
     setIsMultipleAddSelected(false);
   };
-
+  const handleShare = async contentToShare => {
+    try {
+      await Share.share({
+        message: contentToShare, // 要分享的内容
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   const handleMultipleAddPress = () => {
     setIsSingleAddSelected(false);
     setIsMultipleAddSelected(true);
   };
+
+  // 打开模态对话框
+  const openQRCodeModal = () => {
+    setQRCodeModalVisible(true);
+  };
+
+  // 关闭模态对话框
+  const closeQRCodeModal = () => {
+    setQRCodeModalVisible(false);
+  };
+
   return (
     <View
       style={{
@@ -224,6 +247,7 @@ const CardEdit = ({navigation}) => {
               <TouchableOpacity
                 onPress={() => {
                   //彈出QRCODE窗
+                  openQRCodeModal();
                 }}
                 style={{
                   borderWidth: 1,
@@ -294,6 +318,15 @@ const CardEdit = ({navigation}) => {
             flex: 0.01,
           }}></View>
       </View>
+
+      <QRCodeModal
+        shareTo={() => {
+          console.log('彈出分享');
+          handleShare('彈出分享');
+        }}
+        visible={isQRCodeModalVisible}
+        onClose={closeQRCodeModal}
+      />
     </View>
   );
 };
